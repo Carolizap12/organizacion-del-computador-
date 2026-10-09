@@ -414,15 +414,15 @@ svg text{font-family:Calibri,"Segoe UI",system-ui,Arial,sans-serif}
 </section>
 
 <!-- 11 · P3 ejemplos reales -->
-<section class="slide" data-title="Ejemplos reales: Apple, PS5, Xbox">
+<section class="slide" data-title="Ejemplos reales: Samsung, PS5, Xbox">
   <div class="kick">Punto 3 · Demo</div>
-  <h2>Apple Silicon y consolas de nueva generación</h2>
+  <h2>Celulares Samsung y consolas de nueva generación</h2>
   <p class="sub">Elige un dispositivo y reparte su memoria entre CPU y GPU.</p>
   <div class="bd">
     <div class="cols c2" style="flex:1">
       <div class="card">
         <div class="ctrl"><label for="dev">Dispositivo</label>
-          <select id="dev"><option value="m5">Apple M5</option><option value="m5pro">Apple M5 Pro</option><option value="m5max">Apple M5 Max</option><option value="ps5">PlayStation 5</option><option value="xbox">Xbox Series X</option></select></div>
+          <select id="dev"><option value="a10e">Samsung Galaxy A10e (2019)</option><option value="a36">Samsung Galaxy A36 (con NPU)</option><option value="ps5">PlayStation 5</option><option value="xbox">Xbox Series X</option></select></div>
         <div id="devInfo"></div>
         <p class="sec" style="margin-top:12px">Reparto entre CPU y GPU</p>
         <div class="ctrl"><label for="gshare">GPU usa</label><input id="gshare" type="range" min="0" max="100" value="60"><output id="gshareV" for="gshare">60%</output></div>
@@ -458,7 +458,7 @@ svg text{font-family:Calibri,"Segoe UI",system-ui,Arial,sans-serif}
         </div></div>
       <div style="display:flex;flex-direction:column"><p class="sec" style="font-size:16px;color:var(--coral)">Desventajas</p>
         <div style="display:grid;gap:10px;flex:1;grid-auto-rows:1fr">
-          <div class="mini con"><div class="ic"><i></i>No se puede ampliar</div><p>La memoria va integrada: un Mac con 16 GB se queda con 16 GB.</p></div>
+          <div class="mini con"><div class="ic"><i></i>No se puede ampliar</div><p>La memoria va integrada: si tu celular trae 8 GB de RAM, te quedas con 8 GB.</p></div>
           <div class="mini con"><div class="ic"><i></i>Se reparten los recursos</div><p>CPU y GPU comparten capacidad y ancho de banda: si una usa mucho, la otra sufre.</p></div>
         </div></div>
     </div>
@@ -837,9 +837,8 @@ $('#btnSend').addEventListener('click',function(){
 setMode('trad');
 
 var DEV={
-  m5:{gb:32,bw:153.6,mem:'LPDDR5X en el mismo empaque del chip'},
-  m5pro:{gb:64,bw:307,mem:'LPDDR5X en el mismo empaque del chip'},
-  m5max:{gb:128,bw:614,mem:'LPDDR5X en el mismo empaque del chip'},
+  a10e:{gb:2,bw:null,mem:'Exynos 7884: procesador y GPU en un solo chip (SoC), con 2 GB de RAM compartida. No tiene NPU.'},
+  a36:{gb:8,bw:null,mem:'Snapdragon 6 Gen 3: procesador, GPU y NPU en un solo chip (SoC) que comparten la misma RAM. Ejemplo con 8 GB (hay versiones de 6, 8 y 12 GB).'},
   ps5:{gb:16,bw:448,mem:'GDDR6 compartida entre CPU y GPU (APU de AMD)'},
   xbox:{gb:16,bw:560,mem:'GDDR6 en dos zonas (APU de AMD)',zones:[[10,560],[6,336]]}
 };
@@ -847,7 +846,7 @@ var dev=$('#dev'),gshare=$('#gshare');
 function renderDev(){
   var d=DEV[dev.value],info=$('#devInfo');clear(info);
   info.appendChild(el('p','how',d.mem));
-  [['Capacidad',d.gb/128*100,'var(--pr)',d.gb+' GB'],['Ancho de banda',d.bw/614*100,'var(--tq)',fmt(d.bw)+' GB/s']].forEach(function(r){
+  [['Capacidad',d.gb/16*100,'var(--pr)',d.gb+' GB']].concat(d.bw?[['Ancho de banda',d.bw/614*100,'var(--tq)',fmt(d.bw)+' GB/s']]:[]).forEach(function(r){
     var row=el('div','barrow');row.appendChild(el('span',null,r[0]));
     var b=el('div','bar'),f=el('i');f.style.width=r[1]+'%';f.style.background=r[2];b.appendChild(f);row.appendChild(b);row.appendChild(el('b',null,r[3]));info.appendChild(row);
   });
